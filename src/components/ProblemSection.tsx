@@ -6,7 +6,7 @@ export default function ProblemSection() {
     },
     {
       question: '연락이 안 돼요',
-      answer: '대표 직접 소통, 평균 2시간 응답',
+      answer: '대표 직접 소통, 평균 1시간 응답',
     },
     {
       question: '서류가 어디있지?',
