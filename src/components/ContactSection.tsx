@@ -84,8 +84,8 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <div className="text-[var(--text-muted)] text-sm mb-1 font-medium">이메일</div>
-                  <a href="mailto:contact@jssolar.kr" className="text-xl font-bold hover:text-[var(--accent)] transition-colors">
-                    contact@jssolar.kr
+                  <a href="mailto:psj@jssolar.kr" className="text-xl font-bold hover:text-[var(--accent)] transition-colors">
+                    psj@jssolar.kr
                   </a>
                 </div>
               </div>
