@@ -67,7 +67,7 @@ export default function ContactSection() {
                 <div>
                   <div className="text-[var(--text-muted)] text-sm mb-1 font-medium">실시간 채팅</div>
                   <a
-                    href="https://pf.kakao.com/_jssolar"
+                    href="https://pf.kakao.com/_Lxgvxon/chat"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-[#FEE500] text-[#3C1E1E] px-5 py-2.5 rounded-xl font-bold hover:bg-[#FDD800] transition-all hover:scale-105"
