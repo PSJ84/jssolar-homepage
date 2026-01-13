@@ -103,7 +103,7 @@ export default function HeroSection() {
               <span className="text-[var(--text-muted)] text-sm mb-4">평균 응답 시간</span>
               <div className="flex items-baseline gap-2 mb-2">
                 <span className="text-6xl lg:text-7xl font-bold text-[var(--accent)] tracking-tighter" style={{ fontFamily: 'Syne, sans-serif' }}>
-                  2
+                  1
                 </span>
                 <span className="text-2xl font-bold">시간</span>
               </div>
