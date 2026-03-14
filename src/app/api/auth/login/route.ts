@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
-import { createToken, setAuthCookie } from '@/lib/auth';
+import { createToken } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,9 +27,17 @@ export async function POST(req: NextRequest) {
     }
 
     const token = await createToken(user.username);
-    await setAuthCookie(token);
 
-    return NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true });
+    response.cookies.set('admin-token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7,
+      path: '/',
+    });
+
+    return response;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json({ error: '로그인 중 오류가 발생했습니다.' }, { status: 500 });
