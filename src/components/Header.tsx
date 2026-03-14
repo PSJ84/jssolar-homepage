@@ -36,7 +36,7 @@ export default function Header() {
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <a href="#" className="relative group">
+          <a href="/" className="relative group">
             <span className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-[var(--text-muted)] group-hover:to-[var(--accent)] transition-all duration-300" style={{ fontFamily: 'Syne, sans-serif' }}>
               JS SOLAR
             </span>
