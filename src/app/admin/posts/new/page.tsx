@@ -11,38 +11,42 @@ export default function NewPostPage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const [form, setForm] = useState({
-    title: '',
-    slug: '',
-    description: '',
-    content: '',
-    category: '기술 해설',
-    tags: '',
-    published: false,
-  });
-
-  function updateForm(field: string, value: string | boolean) {
-    setForm((prev) => ({ ...prev, [field]: value }));
-    if (field === 'title' && !form.slug) {
-      const slug = (value as string)
-        .toLowerCase()
-        .replace(/[^a-z0-9가-힣\s-]/g, '')
-        .replace(/\s+/g, '-');
-      setForm((prev) => ({ ...prev, slug }));
-    }
-  }
+  const [title, setTitle] = useState('');
+  const [slug, setSlug] = useState('');
+  const [description, setDescription] = useState('');
+  const [content, setContent] = useState('');
+  const [category, setCategory] = useState('기술 해설');
+  const [tags, setTags] = useState('');
 
   async function handleSubmit(publish: boolean) {
-    setSaving(true);
     setError('');
+
+    if (!title.trim()) {
+      setError('제목을 입력하세요.');
+      return;
+    }
+
+    setSaving(true);
+
+    const finalSlug = slug.trim() || title
+      .toLowerCase()
+      .replace(/[^a-z0-9가-힣\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+
     try {
       const res = await fetch('/api/admin/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...form,
+          title: title.trim(),
+          slug: finalSlug,
+          description: description.trim(),
+          content,
+          category,
           published: publish,
-          tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
+          tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
         }),
       });
 
@@ -57,7 +61,7 @@ export default function NewPostPage() {
       } else {
         setError(data.error || '저장에 실패했습니다.');
       }
-    } catch (e) {
+    } catch {
       setError('네트워크 오류가 발생했습니다.');
     }
     setSaving(false);
@@ -72,18 +76,20 @@ export default function NewPostPage() {
           </Link>
           <div className="flex items-center gap-2">
             <button
+              type="button"
               onClick={() => handleSubmit(false)}
-              disabled={saving || !form.title}
-              className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium glass text-[var(--text-muted)] hover:text-[var(--text)] transition-colors disabled:opacity-50"
+              disabled={saving}
+              className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium glass text-[var(--text-muted)] hover:text-[var(--text)] transition-colors disabled:opacity-50 cursor-pointer"
             >
-              <Save size={14} /> 임시저장
+              <Save size={14} /> {saving ? '저장 중...' : '임시저장'}
             </button>
             <button
+              type="button"
               onClick={() => handleSubmit(true)}
-              disabled={saving || !form.title}
-              className="flex items-center gap-1 bg-[var(--accent)] text-[var(--bg)] px-4 py-2 rounded-lg text-sm font-bold hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50"
+              disabled={saving}
+              className="flex items-center gap-1 bg-[var(--accent)] text-[var(--bg)] px-4 py-2 rounded-lg text-sm font-bold hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50 cursor-pointer"
             >
-              <Eye size={14} /> 발행
+              <Eye size={14} /> {saving ? '발행 중...' : '발행'}
             </button>
           </div>
         </div>
@@ -98,16 +104,16 @@ export default function NewPostPage() {
           <input
             type="text"
             placeholder="제목"
-            value={form.title}
-            onChange={(e) => updateForm('title', e.target.value)}
-            className="w-full bg-transparent border-none text-3xl font-bold text-[var(--text)] placeholder:text-[var(--text-muted)]/30 focus:outline-none"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full bg-transparent border-b border-[var(--border)] text-3xl font-bold text-[var(--text)] placeholder:text-[var(--text-muted)]/30 focus:outline-none focus:border-[var(--accent)] transition-colors pb-2"
           />
 
           <input
             type="text"
             placeholder="요약 (1~2문장)"
-            value={form.description}
-            onChange={(e) => updateForm('description', e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             className="w-full bg-white/5 border border-[var(--border)] rounded-lg px-4 py-3 text-[var(--text)] focus:border-[var(--accent)] focus:outline-none transition-colors"
           />
 
@@ -115,8 +121,8 @@ export default function NewPostPage() {
             <div>
               <label className="block text-xs text-[var(--text-muted)] mb-1">카테고리</label>
               <select
-                value={form.category}
-                onChange={(e) => updateForm('category', e.target.value)}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
                 className="w-full bg-white/5 border border-[var(--border)] rounded-lg px-4 py-3 text-[var(--text)] focus:border-[var(--accent)] focus:outline-none transition-colors"
               >
                 {categories.map((c) => (
@@ -128,9 +134,9 @@ export default function NewPostPage() {
               <label className="block text-xs text-[var(--text-muted)] mb-1">슬러그 (URL)</label>
               <input
                 type="text"
-                placeholder="url-slug"
-                value={form.slug}
-                onChange={(e) => updateForm('slug', e.target.value)}
+                placeholder="auto-generated"
+                value={slug}
+                onChange={(e) => setSlug(e.target.value)}
                 className="w-full bg-white/5 border border-[var(--border)] rounded-lg px-4 py-3 text-[var(--text)] focus:border-[var(--accent)] focus:outline-none transition-colors"
               />
             </div>
@@ -139,8 +145,8 @@ export default function NewPostPage() {
               <input
                 type="text"
                 placeholder="태양광, EPC, 시공"
-                value={form.tags}
-                onChange={(e) => updateForm('tags', e.target.value)}
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
                 className="w-full bg-white/5 border border-[var(--border)] rounded-lg px-4 py-3 text-[var(--text)] focus:border-[var(--accent)] focus:outline-none transition-colors"
               />
             </div>
@@ -150,8 +156,8 @@ export default function NewPostPage() {
             <label className="block text-xs text-[var(--text-muted)] mb-1">본문 (마크다운)</label>
             <textarea
               placeholder="마크다운으로 글을 작성하세요..."
-              value={form.content}
-              onChange={(e) => updateForm('content', e.target.value)}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               rows={20}
               className="w-full bg-white/5 border border-[var(--border)] rounded-lg px-4 py-3 text-[var(--text)] font-mono text-sm leading-relaxed focus:border-[var(--accent)] focus:outline-none transition-colors resize-y"
             />
