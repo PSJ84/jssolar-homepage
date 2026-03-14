@@ -10,6 +10,7 @@ const categories = ['기술 해설', '시공 사례', '규정 정리', 'O&M'];
 export default function NewPostPage() {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
   const [form, setForm] = useState({
     title: '',
     slug: '',
@@ -33,23 +34,31 @@ export default function NewPostPage() {
 
   async function handleSubmit(publish: boolean) {
     setSaving(true);
-    const res = await fetch('/api/admin/posts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...form,
-        published: publish,
-        tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
-      }),
-    });
+    setError('');
+    try {
+      const res = await fetch('/api/admin/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          published: publish,
+          tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
+        }),
+      });
 
-    if (res.status === 401) {
-      router.push('/admin');
-      return;
-    }
+      if (res.status === 401) {
+        router.push('/admin');
+        return;
+      }
 
-    if (res.ok) {
-      router.push('/admin/posts');
+      const data = await res.json();
+      if (res.ok) {
+        router.push('/admin/posts');
+      } else {
+        setError(data.error || '저장에 실패했습니다.');
+      }
+    } catch (e) {
+      setError('네트워크 오류가 발생했습니다.');
     }
     setSaving(false);
   }
@@ -78,6 +87,12 @@ export default function NewPostPage() {
             </button>
           </div>
         </div>
+
+        {error && (
+          <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 text-red-400 text-sm mb-4">
+            {error}
+          </div>
+        )}
 
         <div className="space-y-4">
           <input
