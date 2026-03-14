@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: 'article',
       publishedTime: post.date,
       modifiedTime: post.updated || post.date,
-      authors: ['성진'],
+      authors: ['JS솔라'],
       ...(post.thumbnail && {
         images: [{ url: post.thumbnail, width: 1200, height: 630, alt: post.title }],
       }),
@@ -89,7 +89,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </h1>
 
               <div className="flex items-center gap-4 text-sm text-[var(--text-muted)] mb-4">
-                <span>성진 · js솔라 대표</span>
+                <span>JS솔라</span>
                 <span className="flex items-center gap-1">
                   <Calendar size={14} />
                   {new Date(post.date).toLocaleDateString('ko-KR')}

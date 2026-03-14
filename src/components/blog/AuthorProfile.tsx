@@ -7,8 +7,8 @@ export default function AuthorProfile() {
         <User size={28} className="text-[var(--accent)]" />
       </div>
       <div>
-        <p className="font-bold text-lg text-[var(--text)]">성진</p>
-        <p className="text-sm text-[var(--text-muted)]">js솔라 대표</p>
+        <p className="font-bold text-lg text-[var(--text)]">JS솔라</p>
+        <p className="text-sm text-[var(--text-muted)]">태양광 EPC 전문기업</p>
         <p className="text-sm text-[var(--text-muted)] mt-1">
           태양광 EPC·인허가·O&M 전문. 현장 실무 경험을 바탕으로 유용한 정보를 공유합니다.
         </p>

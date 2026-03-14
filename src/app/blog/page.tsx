@@ -42,7 +42,7 @@ export default function BlogPage() {
           <BlogList posts={posts} />
 
           <div className="mt-12 text-center text-sm text-[var(--text-muted)]">
-            성진 · js솔라 대표
+            JS솔라
           </div>
         </div>
       </main>
