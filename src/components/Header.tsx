@@ -17,10 +17,11 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { name: '서비스', href: '#services' },
-    { name: '프로세스', href: '#process' },
-    { name: '신뢰도', href: '#trust' },
-    { name: '문의하기', href: '#contact' },
+    { name: '서비스', href: '/#services' },
+    { name: '프로세스', href: '/#process' },
+    { name: '신뢰도', href: '/#trust' },
+    { name: '블로그', href: '/blog' },
+    { name: '문의하기', href: '/#contact' },
   ];
 
   return (
@@ -58,7 +59,7 @@ export default function Header() {
 
           <div className="hidden md:block">
             <a
-              href="#contact"
+              href="/#contact"
               className="relative overflow-hidden bg-[var(--accent)] text-[var(--bg)] px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[var(--accent-hover)] transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(45,212,191,0.4)]"
             >
               상담 신청
@@ -103,7 +104,7 @@ export default function Header() {
                 </a>
               ))}
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setMobileMenuOpen(false)}
                 className="mt-4 bg-[var(--accent)] text-[var(--bg)] px-8 py-4 rounded-xl font-bold text-lg"
               >
