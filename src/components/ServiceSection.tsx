@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { AreaChart, Hammer, RefreshCw, ShieldCheck } from 'lucide-react';
+import { AreaChart, Hammer, RefreshCw, ShieldCheck, Zap } from 'lucide-react';
 
 export default function ServiceSection() {
   const services = [
@@ -23,19 +23,27 @@ export default function ServiceSection() {
     },
     {
       number: '03',
-      title: '리파워링',
-      description: '노후 발전소 성능 복원 전문. 효율 저하된 설비를 새것처럼.',
-      features: ['성능 진단', '모듈 교체', '인버터 업그레이드', '효율 최적화'],
-      icon: RefreshCw,
+      title: '인버터 교체',
+      description: '노후·고장 인버터 신속 교체. 발전 손실을 최소화합니다.',
+      features: ['고장 진단', '기종 선정', '교체 시공', '발전량 복구'],
+      icon: Zap,
       delay: 0.2
     },
     {
       number: '04',
+      title: '리파워링',
+      description: '노후 발전소 성능 복원 전문. 효율 저하된 설비를 새것처럼.',
+      features: ['성능 진단', '모듈 교체', '구조물 보강', '효율 최적화'],
+      icon: RefreshCw,
+      delay: 0.3
+    },
+    {
+      number: '05',
       title: 'O&M',
       description: '설치 후 유지보수와 모니터링. 발전량 이상 시 즉시 대응합니다.',
       features: ['실시간 모니터링', '정기 점검', '긴급 대응', '성능 분석'],
       icon: ShieldCheck,
-      delay: 0.3
+      delay: 0.4
     },
   ];
 
@@ -56,8 +64,8 @@ export default function ServiceSection() {
           </p>
         </motion.div>
 
-        {/* Service Cards - 2x2 Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+        {/* Service Cards - 3+2 Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {services.map((service) => (
             <motion.div
               key={service.number}
