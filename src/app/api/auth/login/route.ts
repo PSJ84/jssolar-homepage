@@ -39,8 +39,7 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (error) {
-    const msg = error instanceof Error ? error.message : String(error);
-    console.error('Login error:', msg);
-    return NextResponse.json({ error: `로그인 오류: ${msg}` }, { status: 500 });
+    console.error('Login error:', error);
+    return NextResponse.json({ error: '로그인 중 오류가 발생했습니다.' }, { status: 500 });
   }
 }
