@@ -113,7 +113,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </div>
               )}
 
-              <div className="blog-content prose prose-invert max-w-none">
+              <div className="blog-content">
                 <MDXRemote
                   source={post.content}
                   options={{

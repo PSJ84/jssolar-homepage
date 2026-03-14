@@ -156,8 +156,8 @@ h6 {
 }
 
 .blog-content strong {
-  color: var(--text);
-  font-weight: 600;
+  color: var(--accent) !important;
+  font-weight: 700 !important;
 }
 
 .blog-content ul,
